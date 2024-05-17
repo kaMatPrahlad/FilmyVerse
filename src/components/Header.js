@@ -1,5 +1,6 @@
 import React from "react";
 import AddIcon from "@mui/icons-material/Add";
+import { Button } from "@mui/material";
 
 const Header = () => {
   return (
@@ -7,9 +8,11 @@ const Header = () => {
       <span>
         Filmy<span className="text-white ">Verse</span>
       </span>
-      <h1 className="text-lg text-white cursor-pointer flex items-center">
-        <AddIcon className="mr-2" color="inherit" />
-        Add New
+      <h1 className="text-lg cursor-pointer flex items-center">
+        <Button className="text-white">
+          <AddIcon className="mr-2" color="secondary" />
+          <span className="text-white">Add New </span>
+        </Button>
       </h1>
     </div>
   );
