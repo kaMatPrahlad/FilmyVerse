@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import ReactStars from "react-stars";
 
 const Cards = () => {
   const [data, setData] = useState([
     {
       name: "Avengers Endgame",
       year: "2018",
-      rating: 5,
+      rating: 3.5,
       img: "https://picfiles.alphacoders.com/458/thumb-458644.jpg",
     },
     {
@@ -17,13 +18,25 @@ const Cards = () => {
     {
       name: "Avengers Endgame",
       year: "2018",
-      rating: 5,
+      rating: 4,
       img: "https://picfiles.alphacoders.com/458/thumb-458644.jpg",
     },
     {
       name: "Avengers Endgame",
       year: "2018",
       rating: 5,
+      img: "https://picfiles.alphacoders.com/458/thumb-458644.jpg",
+    },
+    {
+      name: "Avengers Endgame",
+      year: "2018",
+      rating: 2.5,
+      img: "https://picfiles.alphacoders.com/458/thumb-458644.jpg",
+    },
+    {
+      name: "Avengers Endgame",
+      year: "2018",
+      rating: 4,
       img: "https://picfiles.alphacoders.com/458/thumb-458644.jpg",
     },
     {
@@ -47,9 +60,9 @@ const Cards = () => {
               <span className="text-gray-500">Name: </span>
               {e.name}
             </h1>
-            <h1>
-              <span className="text-gray-500">Rating: </span>
-              {e.rating}
+            <h1 className="flex items-center">
+              <span className="text-gray-500 mr-1">Rating: </span>
+              <ReactStars size={20} half={true} value={e.rating} edit={false} />
             </h1>
             <h1>
               <span className="text-gray-500">Year: </span>
