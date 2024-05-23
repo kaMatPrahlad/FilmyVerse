@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-transform-class-properties": "^7.24.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.18",
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3"
   }
