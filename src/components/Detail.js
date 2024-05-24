@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ReactStars from "react-stars";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
+import { getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
 import { ThreeCircles } from "react-loader-spinner";
-import Reviews from "./Reviews";
 
 const Detail = () => {
   const { id } = useParams();
@@ -13,11 +12,8 @@ const Detail = () => {
     year: "",
     image: "",
     description: "",
-    rating: 0,
-    rated: 0,
   });
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     async function getData() {
       setLoading(true);
@@ -30,7 +26,7 @@ const Detail = () => {
   }, []);
 
   return (
-    <div className="p-4 mt-4 flex flex-col md:flex-row items-center md:items-start w-full justify-center">
+    <div className="p-4 flex flex-col md:flex-row items-center md:items-start justify-center mt-4 w-full">
       {loading ? (
         <div className="h-96 flex w-full justify-center items-center">
           <ThreeCircles height={30} color="white" />
@@ -38,22 +34,20 @@ const Detail = () => {
       ) : (
         <>
           <img className="h-96 block md:sticky top-24" src={data.image} />
-
-          <div className="md:ml-4 ml-0 w-full md:w-1/2">
-            <h1 className="text-3xl font-bold text-gray-400">
-              {data.title} <span className="text-xl">({data.year})</span>
+          <div className="md:ml-4 ml-0  w-full md:w-1/2">
+            <h1 className="text-3xl font-bold text-gray-400 ">
+              {data.title}
+              <span className="text-xl">({data.year})</span>
             </h1>
 
             <ReactStars
+              className=""
               size={20}
               half={true}
-              value={data.rating / data.rated}
+              value={4.5}
               edit={false}
             />
-
             <p className="mt-2">{data.description}</p>
-
-            <Reviews id={id} prevRating={data.rating} userRated={data.rated} />
           </div>
         </>
       )}
