@@ -1,9 +1,9 @@
 import { Description } from "@mui/icons-material";
 import React, { useState } from "react";
 import { TailSpin } from "react-loader-spinner";
-import {addDoc} from "firebase/firestore"
-import {moviesRef} from "../firebase/firebase"
-import swal from 'sweet-alert'
+import { addDoc } from "firebase/firestore";
+import { moviesRef } from "../firebase/firebase";
+import swal from "sweet-alert";
 
 const AddMovie = () => {
   const [form, setForm] = useState({
@@ -14,16 +14,15 @@ const AddMovie = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  const addMovie = async ()=>{
-    await addDoc(moviesRef,form);
+  const addMovie = async () => {
+    await addDoc(moviesRef, form);
     swal({
       title: "Successfully Added",
       icon: "succcess",
-      buttons:false,
-      timer:3000,
-
-    })
-  }
+      buttons: false,
+      timer: 3000,
+    });
+  };
 
   return (
     <div>
@@ -111,7 +110,10 @@ const AddMovie = () => {
                 </div>
               </div>
               <div className="p-2 w-full">
-                <button oncli className="flex mx-auto text-white bg-green-600 border-0 py-2 px-8 focus:outline-none hover:bg-green-700 rounded text-lg">
+                <button
+                  oncli
+                  className="flex mx-auto text-white bg-green-600 border-0 py-2 px-8 focus:outline-none hover:bg-green-700 rounded text-lg"
+                >
                   {loading ? <TailSpin height={25} color="white" /> : "Submit"}
                 </button>
               </div>
