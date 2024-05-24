@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactStars from "react-stars";
+import { useParams } from "react-router";
+import { moviesRef } from "../firebase/firebase";
+import { getDoc } from "firebase/firestore";
 
 const Detail = () => {
+  const { id } = useParams();
+  const [data, setData] = useState({
+    title: "",
+    year: "",
+    image: "",
+    description: "",
+  });
+  useEffect(() => {
+    async function getData() {
+      const _data = await getDoc(moviesRef, id);
+      setData(_data.data());
+    }
+    getData();
+  }, []);
+
   return (
     <div className="p-4 flex flex-col md:flex-row items-center md:items-start justify-center mt-4 w-full">
       <img
