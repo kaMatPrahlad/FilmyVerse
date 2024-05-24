@@ -12,7 +12,7 @@ const Cards = () => {
       setLoading(true);
       const _data = await getDocs(moviesRef);
       _data.forEach((doc) => {
-        setData((prev) => [...prev, { ...Audio(doc.data()), id: doc.id }]);
+        setData((prev) => [...prev, { ...doc.data(), id: doc.id }]);
       });
 
       setLoading(false);
