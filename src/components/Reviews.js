@@ -1,62 +1,47 @@
-import React, { useContext, useEffect, useState } from "react";
-import ReactStars from "react-stars";
-import { reviewsRef, db } from "../firebase/firebase";
-import {
-  addDoc,
-  doc,
-  updateDoc,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
-import { TailSpin, ThreeDots } from "react-loader-spinner";
+import React, { useContext, useState } from "react";
+import { TailSpin } from "react-loader-spinner";
+import { addDoc } from "firebase/firestore";
+import { moviesRef } from "../firebase/firebase";
 import swal from "sweetalert";
 import { Appstate } from "../App";
 import { useNavigate } from "react-router-dom";
 
-const Reviews = ({ id, prevRating, userRated }) => {
+const AddMovie = () => {
   const useAppstate = useContext(Appstate);
   const navigate = useNavigate();
-  const [rating, setRating] = useState(0);
+  const [form, setForm] = useState({
+    title: "",
+    year: "",
+    description: "",
+    image: "",
+    rated: 0,
+    rating: 0,
+  });
   const [loading, setLoading] = useState(false);
-  const [reviewsLoading, setReviewsLoading] = useState(false);
-  const [form, setForm] = useState("");
-  const [data, setData] = useState([]);
-  const [newAdded, setNewAdded] = useState(0);
 
-  const sendReview = async () => {
+  const addMovie = async () => {
     setLoading(true);
     try {
       if (useAppstate.login) {
-        await addDoc(reviewsRef, {
-          movieid: id,
-          name: useAppstate.userName,
-          rating: rating,
-          thought: form,
-          timestamp: new Date().getTime(),
-        });
-
-        const ref = doc(db, "movies", id);
-        await updateDoc(ref, {
-          rating: prevRating + rating,
-          rated: userRated + 1,
-        });
-
-        setRating(0);
-        setForm("");
-        setNewAdded(newAdded + 1);
+        await addDoc(moviesRef, form);
         swal({
-          title: "Review Sent",
+          title: "Successfully Added",
           icon: "success",
           buttons: false,
           timer: 3000,
         });
+        setForm({
+          title: "",
+          year: "",
+          description: "",
+          image: "",
+        });
       } else {
         navigate("/login");
       }
-    } catch (error) {
+    } catch (err) {
       swal({
-        title: error.message,
+        title: err,
         icon: "error",
         buttons: false,
         timer: 3000,
@@ -65,76 +50,107 @@ const Reviews = ({ id, prevRating, userRated }) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    async function getData() {
-      setReviewsLoading(true);
-      setData([]);
-      let quer = query(reviewsRef, where("movieid", "==", id));
-      const querySnapshot = await getDocs(quer);
-
-      querySnapshot.forEach((doc) => {
-        setData((prev) => [...prev, doc.data()]);
-      });
-
-      setReviewsLoading(false);
-    }
-    getData();
-  }, [newAdded]);
-
   return (
-    <div className="mt-4 border-t-2 border-gray-700 w-full">
-      <ReactStars
-        size={30}
-        half={true}
-        value={rating}
-        onChange={(rate) => setRating(rate)}
-      />
-      <input
-        value={form}
-        onChange={(e) => setForm(e.target.value)}
-        placeholder="Share Your thoughts..."
-        className="w-full p-2 outline-none header"
-      />
-      <button
-        onClick={sendReview}
-        className="bg-green-600 flex justify-center w-full p-2"
-      >
-        {loading ? <TailSpin height={20} color="white" /> : "Share"}
-      </button>
-
-      {reviewsLoading ? (
-        <div className="mt-6 flex justify-center">
-          <ThreeDots height={10} color="white" />
-        </div>
-      ) : (
-        <div className="mt-4">
-          {data.map((e, i) => {
-            return (
-              <div
-                className=" p-2 w-full border-b header bg-opacity-50 border-gray-600 mt-2"
-                key={i}
-              >
-                <div className="flex items-center">
-                  <p className="text-blue-500">{e.name}</p>
-                  <p className="ml-3 text-xs">
-                    ({new Date(e.timestamp).toLocaleString()})
-                  </p>
+    <div>
+      <section className="text-gray-600 body-font relative">
+        <div className="container px-5 py-8 mx-auto">
+          <div className="flex flex-col text-center w-full mb-4">
+            <h1 className="sm:text-3xl text-xl font-medium title-font mb-4 text-white">
+              Add Movie
+            </h1>
+          </div>
+          <div className="lg:w-1/2 md:w-2/3 mx-auto">
+            <div className="flex flex-wrap -m-2">
+              <div className="p-2 w-1/2">
+                <div className="relative">
+                  <label
+                    htmlFor="name"
+                    className="leading-7 text-sm text-gray-300"
+                  >
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={form.title}
+                    onChange={(e) =>
+                      setForm({ ...form, title: e.target.value })
+                    }
+                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
                 </div>
-                <ReactStars
-                  size={15}
-                  half={true}
-                  value={e.rating}
-                  edit={false}
-                />
-
-                <p>{e.thought}</p>
               </div>
-            );
-          })}
+              <div className="p-2 w-1/2">
+                <div className="relative">
+                  <label
+                    htmlFor="email"
+                    className="leading-7 text-sm text-gray-300"
+                  >
+                    Year
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={form.year}
+                    onChange={(e) => setForm({ ...form, year: e.target.value })}
+                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
+                </div>
+              </div>
+              <div className="p-2 w-full">
+                <div className="relative">
+                  <label
+                    htmlFor="message"
+                    className="leading-7 text-sm text-gray-300"
+                  >
+                    Image Link
+                  </label>
+                  <input
+                    id="message"
+                    name="message"
+                    value={form.image}
+                    onChange={(e) =>
+                      setForm({ ...form, image: e.target.value })
+                    }
+                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
+                </div>
+              </div>
+              <div className="p-2 w-full">
+                <div className="relative">
+                  <label
+                    htmlFor="message"
+                    className="leading-7 text-sm text-gray-300"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={form.description}
+                    onChange={(e) =>
+                      setForm({ ...form, description: e.target.value })
+                    }
+                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  ></textarea>
+                </div>
+              </div>
+              <div className="p-2 w-full">
+                <button
+                  onClick={addMovie}
+                  className="flex mx-auto text-white bg-green-600 border-0 py-2 px-8 focus:outline-none hover:bg-green-700 rounded text-lg"
+                >
+                  {loading ? <TailSpin height={25} color="white" /> : "Submit"}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+      </section>
     </div>
   );
 };
 
-export default Reviews;
+export default AddMovie;

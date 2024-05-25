@@ -28,28 +28,28 @@ const Detail = () => {
   }, []);
 
   return (
-    <div className="p-4 flex flex-col md:flex-row items-center md:items-start justify-center mt-4 w-full">
+    <div classNameName="p-4 flex flex-col md:flex-row items-center md:items-start justify-center mt-4 w-full">
       {loading ? (
-        <div className="h-96 flex w-full justify-center items-center">
+        <div classNameName="h-96 flex w-full justify-center items-center">
           <ThreeCircles height={30} color="white" />
         </div>
       ) : (
         <>
-          <img className="h-96 block md:sticky top-24" src={data.image} />
-          <div className="md:ml-4 ml-0  w-full md:w-1/2">
-            <h1 className="text-3xl font-bold text-gray-400 ">
+          <img classNameName="h-96 block md:sticky top-24" src={data.image} />
+          <div classNameName="md:ml-4 ml-0  w-full md:w-1/2">
+            <h1 classNameName="text-3xl font-bold text-gray-400 ">
               {data.title}
-              <span className="text-xl">({data.year})</span>
+              <span classNameName="text-xl">({data.year})</span>
             </h1>
 
             <ReactStars
-              className=""
+              classNameName=""
               size={20}
               half={true}
               value={4.5}
               edit={false}
             />
-            <p className="mt-2">{data.description}</p>
+            <p classNameName="mt-2">{data.description}</p>
             <Reviews />
           </div>
         </>
