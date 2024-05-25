@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { ThreeCircles } from "react-loader-spinner";
+import Reviews from './Reviews'
 
 const Detail = () => {
   const { id } = useParams();
@@ -49,6 +50,7 @@ const Detail = () => {
               edit={false}
             />
             <p className="mt-2">{data.description}</p>
+            <Reviews />
           </div>
         </>
       )}
