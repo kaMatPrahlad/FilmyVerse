@@ -15,6 +15,7 @@ import bcrypt from "bcryptjs";
 const auth = getAuth(app);
 
 const Signup = () => {
+  //Signup info
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
