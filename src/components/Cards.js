@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const Cards = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+//card info
   useEffect(() => {
     async function getData() {
       setLoading(true);
