@@ -24,19 +24,32 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [OTP, setOTP] = useState("");
-
   const generateRecaptha = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       {
         size: "invisible",
         callback: (response) => {
-            // reCAPTCHA, solved, allow, signInWithPhoneNumber
+          // reCAPTCHA, solved, allow, signInWithPhoneNumber
         },
+        // isTesting: true, // Set isTesting to true to disable phone number authentication for testing
       },
-      auth
+       auth
     );
   };
+
+  // const generateRecaptha = () => {
+  //   window.recaptchaVerifier = new RecaptchaVerifier(
+  //     "recaptcha-container",
+  //     {
+  //       size: "invisible",
+  //       callback: (response) => {
+  //         // reCAPTCHA, solved, allow, signInWithPhoneNumber
+  //       },
+  //     },
+  //     auth
+  //   );
+  // };
 
   const requestOtp = () => {
     setLoading(true);

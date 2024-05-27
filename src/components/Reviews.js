@@ -78,7 +78,7 @@ const Reviews = ({ id, prevRating, userRated }) => {
 
       setReviewsLoading(false);
     }
-    getData();
+    // getData();
   }, [newAdded]);
 
   return (
