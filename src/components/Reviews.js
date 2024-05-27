@@ -1,14 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactStars from "react-stars";
 import { reviewsRef, db } from "../firebase/firebase";
-import {
-  addDoc,
-  doc,
-  updateDoc,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { addDoc, doc, updateDoc, query, getDocs } from "firebase/firestore";
 import { TailSpin, ThreeDots } from "react-loader-spinner";
 import swal from "sweetalert";
 import { Appstate } from "../App";
