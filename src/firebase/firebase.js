@@ -3,12 +3,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBssCRPt4t7Nv-3SjBmRCbQeO37qYvcgkU",
-  authDomain: "filmyverse-2c66d.firebaseapp.com",
-  projectId: "filmyverse-2c66d",
-  storageBucket: "filmyverse-2c66d.appspot.com",
-  messagingSenderId: "498805508106",
-  appId: "1:498805508106:web:c199a3fb381d5b0fdab7f3",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
