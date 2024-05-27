@@ -31,7 +31,7 @@ const Signup = () => {
       {
         size: "invisible",
         callback: (response) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
+            // reCAPTCHA, solved, allow, signInWithPhoneNumber
         },
       },
       auth
